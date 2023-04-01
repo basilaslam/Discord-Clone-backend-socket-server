@@ -1,9 +1,18 @@
-const io = require('socket.io')(5555, {
-    cors: {
-        origin: '*'
-    }
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+
+app.get('/',(req,res)=>{
+    res.send({name:'socket-server',status:'online'})
 })
 
+
+const io = require('socket.io')(server)
 let activeUsers = [];
 
 io.on('connection', (socket) => {
